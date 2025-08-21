@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
           child: IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),
             onPressed: () {
-              print('User icon pressed');
+              print('User icon pressedvfff');
             },
           ),
         ),
