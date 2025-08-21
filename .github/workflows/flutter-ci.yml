@@ -15,28 +15,41 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Setup Flutter
+      # 2. Setup Java (required for Android/Gradle)
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # 3. Setup Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.29.3" # Use your project’s version
 
-      # 3. Install dependencies
+      # 4. Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # 4. Analyze code
+      # 5. Analyze code
       - name: Run flutter analyze
         run: flutter analyze
 
-      # 5. Run tests
+      # 6. Run tests
       - name: Run tests
         run: flutter test
 
-      # 6. Build Android APK
-      - name: Build APK
-        run: flutter build apk --release
+      # 7. Accept Android licenses
+      - name: Accept Android Licenses
+        run: yes | flutter doctor --android-licenses
 
+      # 8. Build Android APK
+      - name: Build APK
+        run: flutter build apk --debug
+
+
+        # 9. Upload APK as artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
